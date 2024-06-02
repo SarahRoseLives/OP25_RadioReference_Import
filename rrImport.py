@@ -68,10 +68,7 @@ trunktsvHeader = '"Sysname"\t' + '"Control Channel List"\t' + '"Offset"\t' + '"N
 count = 0
 for i in result:
     try:
-        #print(str(result[count].siteId) + ':' + str(rrSiteId) + ':' + str(count))
         if str(result[count].siteId) in str(rrSiteId):
-
-
 
             sitefreqs = result[count].siteFreqs
 
@@ -82,7 +79,7 @@ for i in result:
                     dedicatedCC = str(sitefreqs[controlcount].freq)
                 if sitefreqs[controlcount].use == "a":
                     altList.append(str(sitefreqs[controlcount].freq))
-                    alternateCC = re.sub("(\[|\]|')", "", str(altList))
+                    alternateCC = re.sub(r"(\[|\]|')", "", str(altList))
                 else:
                     alternateCC = ""
                 controlcount = controlcount + 1
@@ -100,7 +97,6 @@ for i in result:
             rfss = str(result[count].rfss)
             site = str(result[count].siteNumber)
 
-
             with open(op25OutputPath + sysid + '_' + rrSiteId + '_trunk.tsv', 'a+') as op25OutputFile:
                 op25OutputFile.write(
                     trunktsvHeader + systemC + '\t' + cclist + '\t' + offset + '\t' + nac + '\t' + modulation + '\t' + tagfile + '\t' + whitelist + '\t' + blacklist + '\t' + centerfreq)
@@ -110,3 +106,4 @@ for i in result:
         print(e)
         count = count + 1
         pass
+
